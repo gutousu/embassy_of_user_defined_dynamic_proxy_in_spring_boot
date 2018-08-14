@@ -19,13 +19,6 @@ public class TestController
     @Autowired
     private ApplicationContext applicationContext;
 
-    //@Bean
-    //Boolean setApplicationContext(ApplicationContext applicationContext)
-    //{
-    //    this.applicationContext = applicationContext;
-    //    return true;
-    //}
-
     @Autowired
     private ITestService testService;
 
