@@ -27,7 +27,6 @@ public class TestController
     @GetMapping("/t")
     public String t()
     {
-        //ITest1Service testService = applicationContext.getBean(ITest1Service.class);
         String result1 = testService.t4();
         test1ServiceImpl.t4();
         return "test1";
