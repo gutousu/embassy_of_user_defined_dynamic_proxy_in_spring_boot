@@ -1,4 +1,4 @@
-package com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.internalUse;
+package com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.internalUse.classAndInteOperation;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -8,12 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-
-/**
- * bean注册与加工
- */
 @Component
-final class BeanDefinitionRegistryPostProcessorImpl implements ApplicationContextAware,BeanDefinitionRegistryPostProcessor
+public class ScannerConfig implements ApplicationContextAware,BeanDefinitionRegistryPostProcessor
 {
     private ApplicationContext applicationContext;
 
@@ -28,13 +24,11 @@ final class BeanDefinitionRegistryPostProcessorImpl implements ApplicationContex
      * @throws BeansException
      */
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        ImplScanner implScanner = new ImplScanner(registry);
-        implScanner.setApplicationContext(applicationContext);
-        implScanner.scanner();
+
     }
 
     /**
-     * bean加工
+     * 设置扫描工具
      * @param beanFactory
      * @throws BeansException
      */

@@ -1,6 +1,8 @@
-package com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.internalUse;
+package com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.internalUse.classAndInteOperation;
 
+import com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.externalUse.AProxy;
 import com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.externalUse.SetProxy;
+import com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.internalUse.Util;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -13,7 +15,7 @@ import java.util.Set;
 
 
 /**
- * 遍历接口
+ * 接口扫描
  */
 final class InteScanner extends ClassPathBeanDefinitionScanner implements Util
 {
@@ -37,7 +39,7 @@ final class InteScanner extends ClassPathBeanDefinitionScanner implements Util
     }
 
     /**
-     * 遍历符合条件的接口
+     *
      * @param basePackages
      * @return
      */
@@ -48,7 +50,12 @@ final class InteScanner extends ClassPathBeanDefinitionScanner implements Util
             try {
                 GenericBeanDefinition definition = (GenericBeanDefinition) holder.getBeanDefinition();
                 Class<?> type = Class.forName(definition.getBeanClassName());
-                definition = setGenericBeanDefinition(type,definition,applicationContext);
+                SetProxy setProxy = type.getAnnotation(SetProxy.class);
+                AProxy proxy = setProxy.value().newInstance();
+                proxy.setMethodMap(methodMap(type));
+                definition.getPropertyValues().add("type", type);
+                definition.getPropertyValues().add("proxy", proxy);
+                definition.setBeanClass(ProxyFactory.class);
             }
             catch (Exception ex){
                 ex.printStackTrace();
@@ -67,11 +74,12 @@ final class InteScanner extends ClassPathBeanDefinitionScanner implements Util
     }
 
     /**
-     * 为接口添加代理
+     * 开始扫描
      * @param packageName 扫描包的路径
      */
     void scanner(String packageName)
     {
         super.scan(packageName);
     }
+
 }

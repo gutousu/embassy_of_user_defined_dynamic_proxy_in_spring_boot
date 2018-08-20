@@ -2,7 +2,6 @@ package com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.test.co
 
 import com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.test.service.impl.Test1ServiceImpl;
 import com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.test.service.inter.ITest1Service;
-import com.example.embassy_of_user_defined_dynamic_proxy_in_spring_boot.test.service.inter.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -19,16 +18,18 @@ public class TestController
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Autowired
-    private ITestService testService;
+    @Autowired(required = false)
+    private ITest1Service testService;
+
+    @Autowired(required = false)
+    private Test1ServiceImpl test1ServiceImpl;
 
     @GetMapping("/t")
     public String t()
     {
-        ITestService testService = applicationContext.getBean(ITestService.class);
-        String result1 = testService.t1();
-        ITest1Service test1Service = applicationContext.getBean(Test1ServiceImpl.class);
-        String result2 = test1Service.t4();
+        //ITest1Service testService = applicationContext.getBean(ITest1Service.class);
+        String result1 = testService.t4();
+        test1ServiceImpl.t4();
         return "test1";
     }
 

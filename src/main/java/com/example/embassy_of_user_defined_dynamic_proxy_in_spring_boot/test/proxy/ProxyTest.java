@@ -16,6 +16,8 @@ public class ProxyTest extends AProxy
         if (method.getDeclaringClass().isInterface())
             return "test";
         Object result = method.invoke(o,objects);
+
+
         return result;
     }
 }
